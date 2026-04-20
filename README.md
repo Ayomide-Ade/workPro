@@ -10,7 +10,7 @@ A full-stack web application for managing KareVault's internship programme. Appl
 
 ## Screenshots
 
-![App Screenshot]("public/images/intern-screenshot.png")
+![App Screenshot](public/images/intern-screenshot.png)
 
 ---
 
