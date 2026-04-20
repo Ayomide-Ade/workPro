@@ -16,7 +16,6 @@ A full-stack web application for managing KareVault's internship programme — a
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
 - [Authentication & Roles](#authentication--roles)
 - [Pages & Routes](#pages--routes)
 - [Application Status Flow](#application-status-flow)
@@ -121,32 +120,6 @@ php artisan serve
 ```
 
 The app will be available at `http://localhost:8000`.
-
----
-
-## Environment Variables
-
-Update your `.env` file with the following:
-
-```env
-APP_NAME=KareVault
-APP_URL=http://localhost:8000
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=karevault_intern
-DB_USERNAME=root
-DB_PASSWORD=
-
-MAIL_MAILER=smtp
-MAIL_HOST=your-mail-host
-MAIL_PORT=587
-MAIL_USERNAME=your@email.com
-MAIL_PASSWORD=your-password
-MAIL_FROM_ADDRESS=noreply@karevault.com
-MAIL_FROM_NAME="KareVault"
-```
 
 ---
 
