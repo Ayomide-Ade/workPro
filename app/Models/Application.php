@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Application extends Model
 {
@@ -29,7 +32,7 @@ class Application extends Model
     /**
      * An application belongs to one user (the intern).
      */
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -56,10 +59,10 @@ class Application extends Model
      */
     public function statusLabel(): array
     {
-        return match($this->status) {
+        return match ($this->status) {
             'approved' => ['label' => 'Approved',  'color' => 'green'],
             'rejected' => ['label' => 'Rejected',  'color' => 'red'],
-            default    => ['label' => 'Pending',   'color' => 'yellow'],
+            default => ['label' => 'Pending',   'color' => 'yellow'],
         };
     }
 }

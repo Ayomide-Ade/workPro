@@ -12,11 +12,11 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('user_id')
-                  ->constrained()
-                  ->onDelete('cascade'); // deleting a user removes their application
+                ->constrained()
+                ->onDelete('cascade'); // deleting a user removes their application
 
             $table->enum('status', ['pending', 'approved', 'rejected'])
-                  ->default('pending');
+                ->default('pending');
 
             $table->string('role_applied_for')->nullable(); // e.g. "Frontend Dev", "Data Science"
 

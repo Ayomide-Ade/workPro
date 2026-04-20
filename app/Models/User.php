@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -31,8 +34,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-            'cgpa'              => 'decimal:2',
+            'password' => 'hashed',
+            'cgpa' => 'decimal:2',
         ];
     }
 
@@ -41,7 +44,7 @@ class User extends Authenticatable
     /**
      * An intern has one application record.
      */
-    public function application(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function application(): HasOne
     {
         return $this->hasOne(Application::class);
     }

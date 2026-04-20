@@ -15,8 +15,8 @@ class AdminDashboardController extends Controller
         $filter = $request->query('status', 'all');
 
         $query = User::where('role', 'intern')
-                     ->with('application')
-                     ->latest();
+            ->with('application')
+            ->latest();
 
         if (in_array($filter, ['pending', 'approved', 'rejected'])) {
             $query->whereHas('application', function ($q) use ($filter) {
@@ -27,13 +27,13 @@ class AdminDashboardController extends Controller
         $interns = $query->paginate(15)->withQueryString();
 
         $counts = [
-            'all'      => User::where('role', 'intern')->count(),
-            'pending'  => Application::where('status', 'pending')->count(),
+            'all' => User::where('role', 'intern')->count(),
+            'pending' => Application::where('status', 'pending')->count(),
             'approved' => Application::where('status', 'approved')->count(),
             'rejected' => Application::where('status', 'rejected')->count(),
         ];
 
-        return view('admin.dashboard', compact('interns', 'counts', 'filter'));
+        return view('admin.dashboard', ['interns' => $interns, 'counts' => $counts, 'filter' => $filter]);
     }
 
     public function show(User $user)
@@ -42,7 +42,7 @@ class AdminDashboardController extends Controller
 
         $application = $user->application;
 
-        return view('admin.profile', compact('user', 'application'));
+        return view('admin.profile', ['user' => $user, 'application' => $application]);
     }
 
     public function updateStatus(Request $request, User $user)
@@ -50,19 +50,19 @@ class AdminDashboardController extends Controller
         abort_if($user->isAdmin(), 404);
 
         $validated = $request->validate([
-            'status'      => ['required', 'in:pending,approved,rejected'],
+            'status' => ['required', 'in:pending,approved,rejected'],
             'admin_notes' => ['nullable', 'string', 'max:1000'],
         ]);
 
         $user->application()->updateOrCreate(
             ['user_id' => $user->id],
             [
-                'status'      => $validated['status'],
+                'status' => $validated['status'],
                 'admin_notes' => $validated['admin_notes'] ?? null,
                 'reviewed_at' => now(),
             ]
         );
 
-        return back()->with('success', 'Internship ' . ($request->status) . ' for ' . $user->name . '.');
+        return back()->with('success', 'Internship '.($request->status).' for '.$user->name.'.');
     }
 }
