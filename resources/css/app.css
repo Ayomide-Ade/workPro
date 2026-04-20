@@ -1,0 +1,927 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@import "https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" layer(base);
+
+@theme {
+    /* KareVault Official Typography */
+    --font-sans: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
+    --font-outfit: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
+
+    /* KareVault Official Color Palette */
+    --color-brand-50: #ecf3ff;
+    --color-brand-100: #dde9ff;
+    --color-brand-300: #9cb9ff;
+    --color-brand-400: #7592ff;
+    --color-brand-500: #0060c8;
+    --color-brand-600: #0060c8ad;
+    --color-brand-800: #252dae;
+    --color-brand-green: #12b76a; 
+
+    --color-success-50: #ecfdf3;
+    --color-success-500: #12b76a;
+    --color-success-600: #039855;
+    --color-error-50: #fef3f2;
+    --color-error-500: #f04438;
+
+    /* Base Grays for Text & Soft Backgrounds */
+    --color-gray-50: #f8fbff;
+    --color-gray-100: #f2f4f7;
+    --color-gray-200: #e4e7ec;
+    --color-gray-300: #d0d5dd;
+    --color-gray-400: #98a2b3;
+    --color-gray-500: #667085;
+    --color-gray-600: #64748b;
+    --color-gray-700: #344054;
+    --color-gray-800: #5a5a5d;
+    --color-gray-900: #1a2231;
+    --color-white: #fff;
+
+    /* Custom Shadows */
+    --shadow-theme-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+    --shadow-theme-sm:
+        0px 1px 3px 0px rgba(16, 24, 40, 0.1),
+        0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+    --shadow-theme-md:
+        0px 4px 8px -2px rgba(16, 24, 40, 0.1),
+        0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+    --shadow-theme-lg:
+        0px 12px 16px -4px rgba(16, 24, 40, 0.08),
+        0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+        
+    /* Custom Card Shadows */
+    --shadow-card: 0px 8px 24px rgba(0, 0, 0, 0.04);
+    --shadow-card-hover: 0px 12px 32px rgba(0, 96, 200, 0.08);
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+    body {
+        background-color: var(--color-white);
+        color: var(--color-gray-900);
+        line-height: 1.6;
+        overflow-x: hidden;
+        font-family: var(--font-sans);
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+    }
+}
+
+@layer components {
+    /* Layout & Sections */
+    .section-hero {
+        @apply relative bg-white min-h-screen flex flex-col justify-center pt-20 pb-16 px-6 lg:px-20 overflow-hidden;
+    }
+    .section-white {
+        @apply py-24 px-6 lg:px-20 bg-white;
+    }
+    .section-light, .section-gray {
+        @apply py-24 px-6 lg:px-20 bg-gray-50;
+    }
+    .section-blue {
+        @apply py-24 px-6 lg:px-20 bg-brand-500;
+    }
+    .section-blue .text-heading {
+        @apply text-white;
+    }
+    .section-blue .text-desc {
+        @apply text-white/80;
+    }
+    .section-blue .text-eyebrow {
+        @apply text-brand-100;
+    }
+    .container-main {
+        @apply max-w-7xl mx-auto w-full;
+    }
+
+    /* Typography */
+    .text-eyebrow {
+        @apply text-[13px] font-bold tracking-[0.1em] uppercase text-brand-500 mb-3;
+    }
+    .text-heading {
+        @apply text-3xl md:text-[44px] font-bold text-gray-900 leading-[1.15] tracking-tight mb-4;
+    }
+    .text-desc {
+        @apply text-[17px] text-gray-600 leading-[1.75];
+    }
+
+    /* Hero Components */
+    .hero-content {
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 flex-1;
+    }
+    .hero-title {
+        @apply text-5xl lg:text-[66px] font-bold text-gray-900 leading-[1.05] tracking-tight mb-6;
+    }
+    .hero-subtitle {
+        @apply text-lg text-gray-600 leading-relaxed max-w-[500px] mb-10;
+    }
+    .hero-actions {
+        @apply flex flex-wrap gap-4;
+    }
+    .hero-image-wrap {
+        /* Changed items-end to items-center */
+        @apply hidden lg:flex justify-end items-center h-full min-h-[500px] relative; 
+    }
+    .hero-image {
+        /* Added -translate-y-8 to bump it up slightly */
+        @apply w-full max-w-[700px] lg:max-w-[115%] object-contain transition-transform duration-500 hover:-translate-y-1 origin-bottom-right -translate-y-8;
+        filter: drop-shadow(0 24px 64px var(--color-brand-100));
+    }
+    .hero-glow-blue {
+        @apply absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full pointer-events-none blur-3xl opacity-[0.06];
+        background: radial-gradient(circle, var(--color-brand-500) 0%, transparent 70%);
+    }
+    .hero-glow-green {
+        @apply absolute bottom-24 -left-12 w-[300px] h-[300px] rounded-full pointer-events-none blur-3xl opacity-[0.06];
+        background: radial-gradient(circle, var(--color-brand-green) 0%, transparent 70%);
+    }
+    /* Floating Hero Badges */
+    .floating-badge {
+        @apply absolute bg-white rounded-xl p-3 flex items-center gap-3 z-20 whitespace-nowrap;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Adjusted position to hover over the image */
+    .top-badge {
+        @apply top-24 -left-12;
+    }
+
+    .bottom-badge {
+        @apply bottom-32 -left-4;
+    }
+
+    .badge-icon-box {
+        @apply w-8 h-8 rounded-lg bg-success-50 flex items-center justify-center;
+    }
+
+    /* Floating Animation */
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+    }
+
+    /* Navigation */
+    .kv-nav {
+        @apply fixed w-full left-0 top-0 z-[200] transition-all duration-300 border-b-0;
+        background: rgba(255, 255, 255, 0); 
+        backdrop-filter: blur(0px);
+    }
+    
+    .kv-nav.scrolled {
+        @apply border-b border-brand-100; /* Border ONLY appears here */
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 4px 32px rgba(0, 0, 0, 0.04);
+        backdrop-filter: blur(20px) saturate(180%);
+    }
+    .kv-nav-inner {
+        @apply max-w-7xl mx-auto px-5 md:px-10 h-[72px] flex items-center justify-between gap-8;
+    }
+    .kv-nav-logo {
+        @apply flex items-center no-underline shrink-0 transition-opacity duration-200 hover:opacity-85;
+    }
+    .kv-nav-links {
+        @apply hidden md:flex items-center gap-1;
+    }
+    .kv-nav-link {
+        @apply font-medium text-[15px] text-gray-600 no-underline px-4 py-2 rounded-md transition-colors duration-200;
+    }
+    .kv-nav-link:hover {
+        @apply text-brand-500 bg-brand-50;
+    }
+    .kv-nav-cta {
+        @apply flex gap-3 items-center shrink-0;
+    }
+    /* Light Auth Layout */
+    .auth-page {
+        @apply min-h-screen bg-gray-50 flex flex-col relative overflow-hidden;
+    }
+    .auth-glow-green {
+        @apply absolute -top-[200px] -right-[200px] w-[600px] h-[600px] rounded-full pointer-events-none opacity-10 blur-3xl;
+        background: radial-gradient(circle, var(--color-brand-green) 0%, transparent 70%);
+    }
+    .auth-box {
+        /* Removed animate-fade-in-up from the @apply list */
+        @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-[24px] p-8 md:p-12 w-full max-w-[440px] shadow-2xl;
+        
+        /* Add the animation directly here instead */
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    /* Registration specific layouts */
+    .auth-card-wide {
+        @apply bg-white border border-gray-100 rounded-[24px] p-8 md:p-12 w-full max-w-[680px];
+        box-shadow: var(--shadow-card);
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    
+    /* Secondary Glow for visual balance */
+    .auth-glow-blue {
+        @apply absolute -bottom-[200px] -left-[200px] w-[600px] h-[600px] rounded-full pointer-events-none opacity-5 blur-3xl;
+        background: radial-gradient(circle, var(--color-brand-500) 0%, transparent 70%);
+    }
+
+    /* Beautiful Form Section Dividers */
+    .form-section-divider {
+        @apply flex items-center gap-4 mt-10 mb-6;
+    }
+    .form-error-text{
+        color: red;
+    }
+    .form-section-text {
+        @apply text-[12px] font-bold tracking-[0.1em] uppercase text-brand-green whitespace-nowrap flex items-center gap-2;
+    }
+    .form-section-line {
+        @apply h-px w-full bg-gray-100;
+    }
+
+    /* Grid Layouts */
+    .form-row-2 {
+        @apply grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5;
+    }
+
+    /* Custom Custom Select Dropdown */
+    .form-select-light {
+        @apply w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-3 outline-none transition-all appearance-none cursor-pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 1rem center;
+        background-repeat: no-repeat;
+        background-size: 1.2em 1.2em;
+    }
+    .form-select-light:focus {
+        @apply border-brand-green bg-success-50/30;
+        box-shadow: 0 0 0 3px rgba(18, 183, 106, 0.15);
+    }
+    
+    /* Light Auth Nav */
+    .auth-nav-light {
+        @apply bg-white px-6 md:px-16 h-[80px] flex items-center justify-between relative z-10 border-b border-gray-100 shadow-sm;
+    }
+    .auth-logo-img {
+        @apply h-10 w-auto; /* Increased logo size */
+    }
+    
+    /* Light Auth Content & Card */
+    .auth-content-wrap {
+        @apply flex-1 flex items-center justify-center p-6 relative z-10;
+    }
+    .auth-card-light {
+        @apply bg-white border border-gray-100 rounded-[24px] p-8 md:p-12 w-full max-w-[440px];
+        box-shadow: var(--shadow-card);
+        
+        /* Add the animation directly here instead */
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    .auth-title {
+        @apply text-3xl font-bold text-gray-900 mb-2 tracking-tight;
+    }
+    .auth-subtitle {
+        @apply text-[15px] text-gray-500 mb-8;
+    }
+    
+    /* Light Auth Form Elements */
+    .form-label-light {
+        @apply block text-gray-700 text-[14px] font-semibold mb-2;
+    }
+    .form-input-light {
+        @apply w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-3 outline-none transition-all placeholder-gray-400;
+    }
+    .form-input-light:focus {
+        @apply border-brand-green bg-success-50/30;
+        box-shadow: 0 0 0 3px rgba(18, 183, 106, 0.15);
+    }
+    .form-checkbox-light {
+        @apply w-4 h-4 accent-brand-green rounded border-gray-300 cursor-pointer;
+    }
+    .form-checkbox-label {
+        @apply text-[14px] text-gray-600 cursor-pointer select-none;
+    }
+    
+    /* Light Auth Footer */
+    .auth-footer-text {
+        @apply text-center mt-8 text-[14px] text-gray-500;
+    }
+    .auth-footer-link {
+        @apply text-brand-green hover:text-success-600 font-semibold transition-colors no-underline;
+    }
+    /* Stats Strip */
+    .stats-container {
+        @apply grid grid-cols-2 md:grid-cols-4 border-none border-gray-100 mt-12 pt-8;
+    }
+    .stat-item {
+        @apply py-4 px-6 md:border-r border-gray-100 transition-colors;
+    }
+    .stat-item:last-child {
+        @apply border-r-0;
+    }
+    .stat-value {
+        @apply text-[28px] font-bold text-gray-900 mb-1;
+    }
+    .stat-value-alt {
+        @apply text-[28px] font-bold text-brand-green mb-1;
+    }
+    .stat-label {
+        @apply text-[14px] text-gray-500;
+    }
+
+    /* Dashboard Layout */
+    .dash-layout {
+        @apply min-h-screen bg-gray-50 flex flex-col;
+    }
+    .dash-nav {
+        @apply bg-white border-b border-gray-200 px-6 md:px-16 h-[76px] flex items-center justify-between sticky top-0 z-20 shadow-sm;
+    }
+    .dash-user-wrap {
+        @apply flex items-center gap-3;
+    }
+    .dash-avatar {
+        @apply w-10 h-10 rounded-full bg-brand-50 border-2 border-brand-100 flex items-center justify-center text-[15px] font-bold text-brand-500;
+    }
+    .dash-username {
+        @apply text-[15px] font-medium text-gray-700 hidden sm:block;
+    }
+    
+    /* Dashboard Content */
+    .dash-body {
+        @apply flex-1 p-6 md:py-12 max-w-[960px] w-full mx-auto;
+    }
+    .dash-title {
+        @apply text-3xl font-bold text-gray-900 mb-1 tracking-tight;
+    }
+    .dash-subtitle {
+        @apply text-[16px] text-gray-500 mb-10;
+    }
+
+    /* Status Hero Card (Dark Theme) */
+    .dash-status-card {
+        @apply bg-gray-900 rounded-[24px] p-8 md:p-10 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative overflow-hidden shadow-xl;
+        animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    .dash-status-glow {
+        @apply absolute -top-[100px] -right-[100px] w-[300px] h-[300px] rounded-full pointer-events-none opacity-20 blur-3xl;
+        background: radial-gradient(circle, var(--color-brand-400) 0%, transparent 70%);
+    }
+    .dash-status-label {
+        @apply text-[12px] font-bold tracking-[0.1em] uppercase text-white/40 mb-3;
+    }
+    .dash-status-text {
+        @apply text-[14px] text-white/50 mt-3;
+    }
+    
+    /* Dynamic Badges & Icons */
+    /* Dynamic Badges & Icons */
+    .dash-badge {
+        @apply inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-[14px] font-bold border;
+    }
+    .dash-badge-pending {
+        @apply bg-[#f79009]/15 text-[#fec84b] border-[#f79009]/30;
+    }
+    .dash-badge-approved {
+        /* Changed text-success-400 to text-success-500 */
+        @apply bg-brand-green/15 text-success-500 border-brand-green/30;
+    }
+    .dash-badge-rejected {
+        /* Changed text-error-400 to text-error-500 */
+        @apply bg-error-500/15 text-error-500 border-error-500/30;
+    }
+    .dash-icon-wrap {
+        @apply w-[76px] h-[76px] rounded-full flex items-center justify-center shrink-0 border-2 relative z-10;
+    }
+    .dash-icon-pending {
+        @apply bg-[#f79009]/10 border-[#f79009]/20 text-[#fec84b];
+    }
+    .dash-icon-approved {
+        /* Changed text-success-400 to text-success-500 */
+        @apply bg-brand-green/10 border-brand-green/20 text-success-500;
+    }
+    .dash-icon-rejected {
+        /* Changed text-error-400 to text-error-500 */
+        @apply bg-error-500/10 border-error-500/20 text-error-500;
+    }
+
+    /* General Cards (Timeline & Profile) */
+    .dash-card {
+        @apply bg-white border border-gray-200 rounded-[24px] p-7 md:p-10 mb-6;
+        box-shadow: var(--shadow-card);
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: 0.1s;
+        opacity: 0;
+    }
+    .dash-card-title {
+        @apply text-lg font-bold text-gray-900 mb-8 pb-5 border-b border-gray-100;
+    }
+
+    /* Timeline Steps */
+    .dash-timeline {
+        @apply flex flex-col md:flex-row items-start relative gap-8 md:gap-0;
+    }
+    .dash-timeline-step {
+        @apply flex-1 flex flex-row md:flex-col items-center md:items-center text-left md:text-center relative w-full gap-4 md:gap-0;
+    }
+    .dash-timeline-line {
+        @apply hidden md:block absolute top-[20px] left-[50%] w-full h-[2px] z-0;
+    }
+    .dash-timeline-dot {
+        @apply w-[40px] h-[40px] rounded-full flex items-center justify-center text-[14px] font-bold relative z-10 md:mb-4 transition-transform duration-300 hover:scale-110 border-2;
+    }
+    .dash-dot-idle {
+        @apply bg-gray-50 text-gray-400 border-gray-200;
+    }
+    .dash-dot-done {
+        @apply bg-brand-500 text-white border-brand-500;
+        box-shadow: 0 0 0 4px rgba(0, 96, 200, 0.12);
+    }
+    .dash-dot-active {
+        @apply bg-[#fffaeb] text-[#f79009] border-[#f79009];
+        box-shadow: 0 0 0 4px rgba(247, 144, 9, 0.1);
+    }
+    .dash-dot-approved {
+        @apply bg-success-50 text-success-600 border-success-500;
+        box-shadow: 0 0 0 4px rgba(18, 183, 106, 0.1);
+    }
+    .dash-dot-rejected {
+        /* Changed text-error-600 to text-error-500 */
+        @apply bg-error-50 text-error-500 border-error-500;
+        box-shadow: 0 0 0 4px rgba(240, 68, 56, 0.1);
+    }
+    .dash-timeline-label {
+        @apply text-[14px] font-medium text-gray-500;
+    }
+    .dash-timeline-label.active {
+        @apply text-gray-900 font-bold;
+    }
+
+    /* Profile Grid */
+    .dash-profile-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6;
+    }
+    .dash-profile-label {
+        @apply text-[11px] font-bold tracking-[0.08em] uppercase text-gray-400 mb-1.5;
+    }
+    .dash-profile-value {
+        @apply text-[15px] font-medium text-gray-900;
+    }
+    /* About Section */
+    .about-grid {
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-20 items-center;
+    }
+    .feature-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 gap-5 mt-9;
+    }
+
+    /* Cards */
+    .card-white {
+        @apply bg-white rounded-2xl p-6 transition-all duration-300;
+        box-shadow: var(--shadow-card);
+    }
+    .card-white:hover {
+        box-shadow: var(--shadow-card-hover);
+        @apply -translate-y-1;
+    }
+    .card-icon {
+        @apply w-[44px] h-[44px] rounded-xl bg-success-50 flex items-center justify-center mb-4 text-brand-green;
+    }
+    .card-title {
+        @apply text-[16px] font-bold text-gray-900 mb-1.5;
+    }
+    .card-desc {
+        @apply text-[14px] text-gray-500 leading-relaxed;
+    }
+
+    /* Mission Card */
+    .mission-card {
+        @apply bg-gray-900 rounded-[24px] p-10 relative overflow-hidden shadow-2xl;
+    }
+    .mission-glow {
+        @apply absolute -top-20 -right-20 w-[300px] h-[300px] rounded-full opacity-20;
+        background: radial-gradient(circle, var(--color-brand-400) 0%, transparent 70%);
+    }
+    .mission-eyebrow {
+        @apply text-[12px] font-bold tracking-[0.1em] uppercase text-brand-300 mb-4;
+    }
+    .mission-title {
+        @apply text-[24px] font-bold text-white leading-[1.3] mb-4;
+    }
+    .mission-desc {
+        @apply text-[15px] text-gray-300 leading-[1.75] mb-8;
+    }
+    .mission-stats-grid {
+        @apply grid grid-cols-2 gap-3;
+    }
+    .mission-stat-box {
+        @apply bg-white/5 rounded-xl p-5 transition-colors hover:bg-white/10;
+    }
+    .mission-stat-val {
+        @apply text-[24px] font-bold text-white mb-1;
+    }
+    .mission-stat-label {
+        @apply text-[13px] text-gray-400;
+    }
+
+    /* Benefits Section Cards */
+    .benefits-grid {
+        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+    }
+    .benefit-card {
+        @apply bg-white rounded-2xl p-8 relative overflow-hidden transition-all duration-300;
+        box-shadow: var(--shadow-card);
+    }
+    .benefit-card:hover {
+        box-shadow: var(--shadow-card-hover);
+        @apply -translate-y-1;
+    }
+    .benefit-accent {
+        @apply absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-500 to-brand-green origin-left scale-x-0 transition-transform duration-300 ease-out;
+    }
+    .benefit-card:hover .benefit-accent {
+        @apply scale-x-100;
+    }
+    .benefit-num {
+        @apply text-[14px] font-bold text-brand-500 mb-4 px-3 py-1.5 bg-brand-50 rounded-md inline-block;
+    }
+    .benefit-title {
+        @apply text-[18px] font-bold text-gray-900 mb-3;
+    }
+    .benefit-desc {
+        @apply text-[15px] text-gray-600 leading-[1.6];
+    }
+
+    /* Process Section */
+    .steps-grid {
+        @apply relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10;
+    }
+    .step-item {
+        @apply flex flex-col items-center text-center px-5 relative z-10;
+    }
+    /* Adjusted text colors for when section is blue */
+    .section-blue .step-title {
+        @apply text-[16px] font-bold text-white mb-2;
+    }
+    .section-blue .step-desc {
+        @apply text-[14px] text-white/80 leading-[1.65];
+    }
+    .step-circle {
+        @apply w-[56px] h-[56px] rounded-full text-brand-500 text-[20px] font-bold flex items-center justify-center mb-6 bg-white transition-all duration-300 group-hover:scale-110;
+        box-shadow: var(--shadow-card);
+    }
+    .step-item:hover .step-circle {
+        box-shadow: var(--shadow-theme-md);
+    }
+    .step-circle-final {
+        @apply text-brand-green;
+    }
+    /* Adjusted line color to stand out on blue */
+    .section-blue .steps-line {
+        @apply hidden lg:block absolute top-[28px] left-[12.5%] right-[12.5%] h-[2px] bg-white/20;
+    }
+
+    /* Roles Section Cards */
+    .roles-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5;
+    }
+    .role-card {
+        @apply bg-white rounded-xl py-6 px-6 flex items-center gap-4 transition-all duration-300 hover:border-brand-green hover:-translate-y-0.5 cursor-default;
+        box-shadow: var(--shadow-card);
+    }
+    .role-card:hover {
+        box-shadow: var(--shadow-theme-sm);
+    }
+    .role-dot {
+        @apply w-[10px] h-[10px] rounded-full bg-brand-green shrink-0 transition-transform duration-300 group-hover:scale-125;
+    }
+    .role-title {
+        @apply text-[15px] font-semibold text-gray-900;
+    }
+
+    /* Large CTA Section */
+    .cta-card {
+        @apply bg-brand-500 rounded-[24px] py-16 px-8 lg:px-16 flex flex-col lg:flex-row items-center justify-between gap-12 relative overflow-hidden shadow-2xl;
+    }
+    .cta-glow {
+        @apply absolute -right-24 -top-24 w-[500px] h-[500px] rounded-full pointer-events-none opacity-20;
+        background: radial-gradient(circle, var(--color-brand-100) 0%, transparent 70%);
+    }
+    .cta-content {
+        @apply relative z-10 lg:max-w-[520px] text-center lg:text-left;
+    }
+    .cta-actions {
+        @apply relative z-10 flex flex-col items-center gap-4 shrink-0 w-full lg:w-auto;
+    }
+
+    /* Admin Layout & Navigation */
+    .admin-layout {
+        @apply min-h-screen bg-gray-50 flex flex-col;
+    }
+    .admin-nav {
+        @apply bg-gray-900 px-6 md:px-16 h-[76px] flex items-center justify-between sticky top-0 z-20 border-b border-white/10;
+    }
+    .admin-logo {
+        @apply text-xl font-bold text-white no-underline tracking-tight transition-opacity hover:opacity-85;
+    }
+    .admin-nav-right {
+        @apply flex items-center gap-4;
+    }
+    .admin-pill {
+        @apply bg-brand-500/20 border border-brand-500/40 rounded-full px-3 py-1 text-[11px] font-bold tracking-[0.06em] text-brand-300;
+    }
+    .admin-name {
+        @apply text-[14px] text-white/60 hidden sm:block;
+    }
+    .admin-logout-btn {
+        @apply text-white/50 border border-white/15 bg-transparent hover:bg-white/10 hover:text-white transition-colors text-[13px] px-4 py-2 rounded-full cursor-pointer;
+    }
+
+    /* Admin Body & Headers */
+    .admin-body {
+        @apply flex-1 p-6 md:py-10 max-w-[1200px] w-full mx-auto;
+    }
+    .admin-title {
+        @apply text-3xl font-bold text-gray-900 mb-1 tracking-tight;
+    }
+    .admin-subtitle {
+        @apply text-[16px] text-gray-500 mb-8;
+    }
+
+    /* Admin Stats Cards */
+    .admin-stat-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8;
+    }
+    .admin-stat-card {
+        @apply bg-white border border-gray-200 rounded-[16px] p-6 transition-all duration-200 hover:-translate-y-0.5;
+        box-shadow: var(--shadow-theme-xs);
+    }
+    .admin-stat-card:hover {
+        box-shadow: var(--shadow-theme-md);
+    }
+    .admin-stat-label {
+        @apply text-[13px] font-medium text-gray-500 mb-2;
+    }
+    .admin-stat-val {
+        @apply text-[32px] font-bold text-gray-900 leading-none;
+        font-family: var(--font-outfit);
+    }
+
+    /* Admin Tabs */
+    .admin-tabs {
+        @apply flex flex-wrap gap-1 bg-gray-100 rounded-xl p-1 w-fit mb-6;
+    }
+    .admin-tab {
+        @apply flex items-center gap-2 text-[14px] font-medium text-gray-500 px-4 py-2 rounded-lg transition-all no-underline hover:text-gray-700 hover:bg-white/60;
+    }
+    .admin-tab.active {
+        @apply bg-white text-gray-900 font-bold shadow-sm;
+    }
+    .admin-tc {
+        @apply text-[11px] font-bold px-2 py-0.5 rounded-full bg-gray-200 text-gray-600 transition-colors;
+    }
+    .admin-tab.active .admin-tc {
+        @apply bg-brand-50 text-brand-500;
+    }
+
+    /* Admin Table */
+    .admin-table-wrap {
+        @apply bg-white border border-gray-200 rounded-[16px] overflow-hidden shadow-sm overflow-x-auto;
+    }
+    .admin-table {
+        @apply w-full text-left border-collapse min-w-[800px];
+    }
+    .admin-th {
+        @apply text-[11px] font-bold tracking-[0.06em] uppercase text-gray-400 px-6 py-4 bg-gray-50 border-b border-gray-200;
+    }
+    .admin-td {
+        @apply text-[14px] text-gray-700 px-6 py-4 border-b border-gray-100 align-middle;
+    }
+    .admin-tr {
+        @apply transition-colors duration-150 hover:bg-gray-50;
+    }
+    .admin-tr:last-child .admin-td {
+        @apply border-b-0;
+    }
+    .admin-td-name {
+        @apply font-semibold text-gray-900;
+    }
+    .admin-td-meta {
+        @apply text-[13px] text-gray-500 mt-0.5;
+    }
+    .admin-table-empty {
+        @apply text-center py-16 text-[15px] text-gray-500;
+    }
+    .admin-table-pg {
+        @apply p-5 border-t border-gray-100 flex justify-end bg-white;
+    }
+
+    /* Safe Table Badges (Using Arbitrary Hex to bypass Vite compiler errors) */
+    .tbl-badge {
+        @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold border;
+    }
+    .tbl-badge-pending {
+        @apply bg-[#fffbeb] text-[#d97706] border-[#fde68a]; 
+    }
+    .tbl-badge-approved {
+        @apply bg-[#ecfdf3] text-[#12b76a] border-[#a6f4c5]; 
+    }
+    .tbl-badge-rejected {
+        @apply bg-[#fef3f2] text-[#f04438] border-[#fecaca]; 
+    }
+    .tbl-badge-dot {
+        @apply w-1.5 h-1.5 rounded-full bg-current opacity-80;
+    }
+
+    /* Admin Profile Header */
+    .admin-back-link {
+        @apply inline-flex items-center gap-2 text-[14px] font-medium text-gray-500 no-underline mb-7 py-1.5 transition-colors hover:text-brand-500;
+    }
+    .admin-prof-header {
+        @apply bg-white border border-gray-200 rounded-[16px] p-7 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 mb-6;
+        box-shadow: var(--shadow-theme-xs);
+    }
+    .admin-prof-avatar {
+        @apply w-14 h-14 rounded-full bg-brand-50 border-2 border-brand-100 flex items-center justify-center text-[22px] font-bold text-brand-500 shrink-0;
+    }
+    .admin-prof-name {
+        @apply text-xl font-bold text-gray-900 mb-1 tracking-tight;
+    }
+    .admin-prof-email {
+        @apply text-[14px] text-gray-500;
+    }
+
+    /* Admin Detail Cards */
+    .admin-detail-card {
+        @apply bg-white border border-gray-200 rounded-[16px] p-7 md:p-8 mb-6;
+        box-shadow: var(--shadow-theme-xs);
+    }
+    .admin-card-title {
+        @apply text-[15px] font-bold text-gray-900 mb-5 pb-4 border-b border-gray-100;
+    }
+    .admin-detail-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-5;
+    }
+    .admin-detail-label {
+        @apply text-[11px] font-bold tracking-[0.06em] uppercase text-gray-400 mb-1.5;
+    }
+    .admin-detail-val {
+        @apply text-[15px] font-medium text-gray-900;
+    }
+
+    /* Admin Custom Status Radios */
+    .admin-radio-group {
+        @apply flex flex-col sm:flex-row gap-3 mb-6;
+    }
+    .admin-radio-input {
+        @apply hidden; 
+    }
+    .admin-radio-label {
+        @apply flex items-center gap-2.5 text-[14px] font-semibold px-5 py-2.5 rounded-lg border-[1.5px] border-gray-200 text-gray-500 cursor-pointer transition-all hover:bg-gray-50 hover:border-gray-300;
+    }
+    
+    /* Dynamic checked states utilizing safe hex colors */
+    .admin-radio-input[value="pending"]:checked + .admin-radio-label {
+        @apply border-[#f59e0b] bg-[#fffbeb] text-[#d97706];
+    }
+    .admin-radio-input[value="approved"]:checked + .admin-radio-label {
+        @apply border-[#10b981] bg-[#ecfdf3] text-[#12b76a];
+    }
+    .admin-radio-input[value="rejected"]:checked + .admin-radio-label {
+        @apply border-[#ef4444] bg-[#fef3f2] text-[#f04438];
+    }
+    
+    /* Forms Additions */
+    .form-textarea-light {
+        @apply w-full bg-white border border-gray-200 text-gray-900 rounded-lg px-4 py-3 outline-none transition-all placeholder-gray-400 resize-y;
+    }
+    .form-textarea-light:focus {
+        @apply border-brand-green bg-success-50/30;
+        box-shadow: 0 0 0 3px rgba(18, 183, 106, 0.15);
+    }
+    .flash-success {
+        @apply flex items-center gap-3 bg-[#ecfdf3] border border-[#a6f4c5] text-[#039855] px-4 py-3.5 rounded-xl text-[14px] font-medium mb-6 shadow-sm;
+        animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .flash-error {
+        @apply flex items-center gap-3 bg-[#fef3f2] border border-[#fecaca] text-[#d92d20] px-4 py-3.5 rounded-xl text-[14px] font-medium mb-6 shadow-sm;
+        animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .flash-warning {
+        @apply flex items-center gap-3 bg-[#fffbeb] border border-[#fde68a] text-[#d97706] px-4 py-3.5 rounded-xl text-[14px] font-medium mb-6 shadow-sm;
+        animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    /* Buttons */
+    .btn {
+        @apply inline-flex justify-center items-center gap-2 px-6 py-3 rounded-full font-semibold text-[15px] transition-all duration-200 cursor-pointer no-underline outline-none whitespace-nowrap;
+    }
+    .btn:active {
+        @apply scale-[0.98];
+    }
+    .btn-primary {
+        @apply bg-brand-500 text-white;
+        box-shadow: var(--shadow-theme-md);
+    }
+    .btn-primary:hover {
+        @apply bg-brand-600 -translate-y-0.5;
+        box-shadow: var(--shadow-theme-lg);
+    }
+    .btn-success {
+        @apply bg-brand-green text-white;
+        box-shadow: var(--shadow-theme-md);
+    }
+    .btn-success:hover {
+        @apply bg-success-600 -translate-y-0.5;
+        box-shadow: var(--shadow-theme-lg);
+    }
+    .btn-outline-success {
+        @apply bg-white text-brand-green border border-brand-green shadow-theme-sm;
+    }
+    .btn-outline-success:hover {
+        @apply bg-success-50 -translate-y-0.5 shadow-theme-md;
+    }
+    .btn-outline {
+        @apply bg-white text-gray-900;
+        box-shadow: var(--shadow-theme-sm);
+    }
+    .btn-outline:hover {
+        @apply bg-gray-50 -translate-y-0.5;
+        box-shadow: var(--shadow-theme-md);
+    }
+    .btn-ghost {
+        @apply bg-transparent text-gray-600;
+    }
+    .btn-ghost:hover {
+        @apply bg-gray-100 text-gray-900;
+    }
+    .btn-xl {
+        @apply text-[16px] px-8 py-3.5;
+    }
+}
+
+@layer utilities {
+    .reveal {
+        @apply opacity-0 translate-y-6 transition-all duration-700 ease-out;
+    }
+    .reveal.visible {
+        @apply opacity-100 translate-y-0;
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+    .delay-100 {
+        animation-delay: 0.1s;
+    }
+    .delay-300 {
+        animation-delay: 0.3s;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+}
