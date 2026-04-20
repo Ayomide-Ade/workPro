@@ -5,7 +5,7 @@
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![License](https://img.shields.io/badge/License-Proprietary-gray?style=flat)
 
-A full-stack web application for managing KareVault's internship programme — allowing applicants to register, track their application status, and enabling admins to review, approve, or reject candidates.
+A full-stack web application for managing KareVault's internship programme. Applicants can register, submit their profile, and track their application status, while the admin team can review and manage all submissions from a dedicated dashboard.
 
 ---
 
@@ -25,26 +25,25 @@ A full-stack web application for managing KareVault's internship programme — a
 
 ## Overview
 
-The KareVault Internship Portal is a Laravel/Blade application that powers the end-to-end internship application process for KareVault — Nigeria's leading digital health and insurtech company. Applicants can apply for one of 8 available roles, track their application in real time, and receive decisions from the admin team.
+The KareVault Internship Portal handles the full internship application cycle for KareVault, a Nigerian digital health and insurtech company. Candidates apply for one of 8 open roles, monitor their progress in real time, and get notified of decisions through their personal dashboard.
 
 ---
 
 ## Features
 
 ### Applicant-Facing
-- Public landing page with programme details, benefits, roles, and application process
-- Registration and login with profile submission (school, CGPA, department, state, role)
-- Personal dashboard showing live application status (Pending / Approved / Rejected)
-- Visual progress timeline reflecting application stage
-- Submitted profile summary view
+- Public landing page covering programme details, benefits, available roles, and how to apply
+- Registration and login with profile submission (school, CGPA, department, state, preferred role)
+- Personal dashboard with live application status (Pending, Approved, or Rejected)
+- Visual progress timeline showing which stage the application is at
+- Read-only summary of the submitted profile
 
 ### Admin-Facing
-- Secure admin dashboard with application statistics (total, pending, approved, rejected)
-- Filterable applicant table by status
-- Paginated applicant list with name, email, school, state, role, and status
-- Individual applicant profile view with full details
-- Status update form (Pending → Approved / Rejected) with internal admin notes
-- Contextual flash messages (green for approved, red for rejected, amber for pending)
+- Secure admin dashboard with a summary of application counts (total, pending, approved, rejected)
+- Applicant table filterable by status with pagination
+- Per-applicant profile page showing full submission details
+- Status update form with support for internal admin notes
+- Colour-coded flash messages depending on the action taken (green for approved, red for rejected, amber for pending)
 
 ---
 
@@ -74,7 +73,7 @@ resources/
     ├── dashboard.blade.php        # Applicant dashboard (auth)
     └── admin/
         ├── dashboard.blade.php    # Admin applicant management table
-        └── profile.blade.php      # Individual applicant detail & status update
+        └── profile.blade.php      # Individual applicant detail and status update
 
 app/
 └── Models/
@@ -90,8 +89,8 @@ app/
 
 - PHP 8.2+
 - Composer
-- Node.js 18+ & npm
-- MySQL or PostgreSQL
+- Node.js 18+ and npm
+- MySQL or SQLite
 
 ### Installation
 
@@ -125,14 +124,14 @@ The app will be available at `http://localhost:8000`.
 
 ## Authentication & Roles
 
-The app uses two user roles:
+There are two user roles in the system:
 
 | Role | Access |
 |---|---|
-| Applicant | Register, login, view own dashboard and application status |
-| Admin | Access `/admin/dashboard`, view all applicants, update statuses |
+| Applicant | Register, log in, view their own dashboard and application status |
+| Admin | Access `/admin/dashboard`, view all applicants, and update statuses |
 
-Admin access is controlled via middleware. Ensure your admin user is seeded or manually flagged in the database (e.g. `is_admin = true`).
+Admin access is gated via middleware. Make sure your admin user is seeded or flagged in the database (e.g. `is_admin = true`).
 
 ---
 
@@ -141,30 +140,30 @@ Admin access is controlled via middleware. Ensure your admin user is seeded or m
 | Method | Route | Description |
 |---|---|---|
 | GET | `/` | Public landing page |
-| GET | `/register` | Applicant registration |
+| GET | `/register` | Applicant registration form |
 | POST | `/register` | Submit application |
 | GET | `/login` | Applicant login |
 | POST | `/logout` | Log out |
 | GET | `/dashboard` | Applicant application status dashboard |
-| GET | `/admin/dashboard` | Admin — all applicants (filterable by status) |
-| GET | `/admin/interns/{id}` | Admin — individual applicant profile |
-| POST | `/admin/interns/{id}/status` | Admin — update applicant status |
+| GET | `/admin/dashboard` | Admin view of all applicants, filterable by status |
+| GET | `/admin/interns/{id}` | Admin view of an individual applicant profile |
+| POST | `/admin/interns/{id}/status` | Admin action to update applicant status |
 
 ---
 
 ## Application Status Flow
 
 ```
-[Submitted] → [Under Review / Pending] → [Approved] or [Not Selected / Rejected]
+Submitted -> Under Review (Pending) -> Approved or Not Selected (Rejected)
 ```
 
-- Every new application starts with `status = pending`
-- Admins update status from the profile page
-- The applicant dashboard reflects status changes in real time
+- All new applications start with `status = pending`
+- Admins update the status from the applicant profile page
+- The applicant dashboard reflects changes in real time
 - Flash messages on the admin profile page are colour-coded:
-  - **Green** — Approved
-  - **Amber** — Reset to Pending
-  - **Red** — Rejected
+  - **Green** for Approved
+  - **Amber** for reset to Pending
+  - **Red** for Rejected
 
 ---
 
@@ -185,8 +184,8 @@ The following roles are open each cycle:
 
 ## Contributing
 
-This is an internal KareVault project. For bugs or feature requests, open an issue on the internal repository or contact the engineering team directly.
+This is an internal KareVault project. For bugs or feature requests, open an issue on the internal repository or reach out to the engineering team directly.
 
 ---
 
-> Built with ❤️ by the KareVault Engineering Team · [karevault.com](https://karevault.com)
+> Built with love by the KareVault Engineering Team · [karevault.com](https://karevault.com)
