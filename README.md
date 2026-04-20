@@ -7,6 +7,11 @@
 
 A full-stack web application for managing KareVault's internship programme. Applicants can register, submit their profile, and track their application status, while the admin team can review and manage all submissions from a dedicated dashboard.
 
+
+## Screenshots
+
+![App Screenshot]("C:\Users\Ayomide\OneDrive\Pictures\Screenshots\intern-screenshot.png")
+
 ---
 
 ## Table of Contents
