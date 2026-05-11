@@ -7,16 +7,15 @@ use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        User::updateOrCreate([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('secret'),
-            'role' => 'admin',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],  // find by email
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('admin123'),
+                'role' => 'admin',
+            ]
+        );
     }
 }
