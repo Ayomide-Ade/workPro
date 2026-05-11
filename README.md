@@ -10,7 +10,10 @@ A full-stack web application for managing KareVault's internship programme. Appl
 
 ## Screenshots
 
-![App Screenshot]("C:\Users\Ayomide\OneDrive\Pictures\Screenshots\intern-screenshot.png")
+![App Screenshot](public/images/intern-screenshot.png)
+
+## Demo
+[Click here](https://workpro-production-b957.up.railway.app/)
 
 ---
 
